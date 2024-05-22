@@ -184,3 +184,30 @@ The website works! And other folks can access it, but that domain name isn't ver
       ![Image](images/dns/cloudflare-8.png)
    9. Click Save.
    10. Wait 1-2 hours, then visit your domain (i.e. `https://ethantmcgee.me`) in a browser. It should work.
+
+### Advanced Security
+
+Our site is "secure" but not as much as it should be. The following part is optional but will allow you to increase your security so that communication to your site is end to end encrypted, which is signifigantly safer.
+
+1. Login to Cloudflare, then go to your domain.
+2. In the side bar on the left, click SSL / TLS > Origin Certificates.
+   ![Image](images/advanced/cloudflare-1.png)
+3. Click Create an origin certificate.
+   ![Image](images/advanced/cloudflare-2.png)
+4. Whem prompted, make sure to use PEM. (Do not close this page yet).
+   ![Image](images/advanced/cloudflare-3.png)
+5. In a new tag, go to AWS, and open your load balancer. Click Actions > Add Listener.
+6. For this listener, use HTTPS, and forward traffic to `web-server-tg` like we did before.
+   ![Image](images/advanced/aws-1.png)
+7. Under the secure listener settings, choose import certificate, and paste the values from the cloudflare tab (warning, they are in backwards order!)
+   ![Image](images/advanced/aws-2.png)
+8. Save, then edit your HTTP:80, listener, change this to redirect to a url and set the redirect port to 443, then save.
+   ![Image](images/advanced/aws-3.png)
+9. Back on Cloudflare, click ok, then go to SSL / TLS > Overview.
+   ![Image](images/advanced/cloudflare-4.png)
+10. Finally, change the mode to Full (Strict)
+    ![Image](images/advanced/cloudflare-5.png)
+
+That's it! Your site may be unavailable for a few moments while the security changes take effect, this is normal.
+
+> Note: the certificate here is only valid for 15 years, so if your site is still running then, you'll need to repeat this process. There are ways to automate the renewal, but those are beyond the scope of this guide.
