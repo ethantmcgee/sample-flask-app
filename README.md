@@ -111,39 +111,39 @@ sudo service flask-app start
 All right, our service is running but isn't accessible at all to users, which means its kinda pointless, let's fix that.
 
 1. In the AWS Console, using the search bar, search for `Security Groups`.
-1. There should be two security groups, a `default` and a `launch wizard`. We are not going to touch the `default` group.
-1. Name the `launch wizard` group to `web-server-tg`.
+2. There should be two security groups, a `default` and a `launch wizard`. We are not going to touch the `default` group.
+3. Name the `launch wizard` group to `web-server-tg`.
    ![Image](images/networking/sg-1.png)
-1. Make another security group named `load-balancer-sg`.
-1. Under Inbound Rules, add two rules.
+4. Make another security group named `load-balancer-sg`.
+5. Under Inbound Rules, add two rules.
    ![Image](images/networking/rules.png)
-1. Copy the security group id of your new group.
+6. Copy the security group id of your new group.
    ![Image](images/networking/sg-2.png)
-1. Edit the inbound rules of your `launch wizard` group. Add a new rule.
+7. Edit the inbound rules of your `launch wizard` group. Add a new rule.
    ![Image](images/networking/new-rule.png)
-1. In AWS Console, using the search bar, search for Target Groups.
-1. Create a new target group.
+8. In AWS Console, using the search bar, search for Target Groups.
+9. Create a new target group.
    1. Leave the type as Instances.
       ![Image](images/networking/type.png)
-   1. Name the group Web Server TG but update the port to 5000.
+   2. Name the group Web Server TG but update the port to 5000.
       ![Image](images/networking/name-port.png)
-   1. Leave the IP settings as their default.
+   3. Leave the IP settings as their default.
       ![Image](images/networking/ip.png)
-   1. Leave all other settings, then click Next.
+   4. Leave all other settings, then click Next.
       ![Image](images/networking/other.png)
-   1. Under available instances, check the box beside your instance, then click Include as pending below.
+   5. Under available instances, check the box beside your instance, then click Include as pending below.
       ![Image](images/networking/include.png)
-   1. Click Create Target Group.
-1. In AWS Console, using the search bar, search for Load Balancers (the ec2 one).
-1. Create a new load balancer.
-   1. Pick Application Load Balancer for the type.
-   1. Name the load balancer `web-server-lb`.
-      ![Image](images/networking/lb-name.png)
-   1. Check all the boxes under Network Mapping.
-      ![Image](images/networking/lb-mapping.png)
-   1. Under security groups, remove default, and select your `load-balancer-sg` group.
-      ![Image](images/networking/lb-sg.png)
-   1. Under Listenders and Routing, change the target group to `web-server-tg`.
-      ![Image](images/networking/lb-listener.png)
-   1. Click create load balancer.
-1. On the next screen, wait until your load balancer is provisioned, then copy / paste the DNS name into a browser. Your website should appear (Note: You may have to wait until 2 hours).
+   6. Click Create Target Group.
+10. In AWS Console, using the search bar, search for Load Balancers (the ec2 one).
+11. Create a new load balancer.
+    1. Pick Application Load Balancer for the type.
+    2. Name the load balancer `web-server-lb`.
+       ![Image](images/networking/lb-name.png)
+    3. Check all the boxes under Network Mapping.
+       ![Image](images/networking/lb-mapping.png)
+    4. Under security groups, remove default, and select your `load-balancer-sg` group.
+       ![Image](images/networking/lb-sg.png)
+    5. Under Listenders and Routing, change the target group to `web-server-tg`.
+       ![Image](images/networking/lb-listener.png)
+    6. Click create load balancer.
+12. On the next screen, wait until your load balancer is provisioned, then copy / paste the DNS name into a browser. Your website should appear (Note: You may have to wait until 2 hours).
