@@ -85,7 +85,7 @@ sudo pip3 install --break-system-packages -r requirements.txt
 python3 flask_app.py
 ```
 
-![Image](images/server/app-run.png)
+![Image](images/server/run-app.png)
 
 You should see a message that the app is running.
 
