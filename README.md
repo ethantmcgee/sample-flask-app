@@ -63,7 +63,15 @@ Congratulations! You have a server running in the cloud, but it has nothing on i
 
 1. Finally, copy the `flask-app.service` files: `scp -i "<Login Key>.pem" flask-app.service ubuntu@<ip address>:~/`
 1. Log back into the server, then `cd flask-app`. Run `ls` to see that the `flask_app.py` and `requirements.txt` were copied successfully. If you don't see the files, stop here and reattempt the above or seek help until they are present.
-1. Let's setup flask and try the server. `sudo pip3 install --break-system-packages -r requirements.txt` then `python3 flask_app.py`. You should see a message that the app is running.
+1. Let's setup flask and try the server.
+
+```
+sudo pip3 install --break-system-packages -r requirements.txt
+python3 flask_app.py
+```
+
+You should see a message that the app is running.
+
 1. Stop the app with `<crtl> + c` then `cd ..`. Run `ls` to see the service file you copied earlier. If you don't see the file, stop here and reattempt the above or seek help until it is present.
 1. Let's install the service.
 
