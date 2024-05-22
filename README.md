@@ -204,9 +204,9 @@ Our site is "secure" but not as much as it should be. The following part is opti
 8. Save, then edit your HTTP:80, listener, change this to redirect to a url and set the redirect port to 443, then save.
    ![Image](images/advanced/aws-3.png)
 9. Back on Cloudflare, click ok, then go to SSL / TLS > Overview.
-   ![Image](images/advanced/cloudflare-4.png)
+   ![Image](images/advanced/cloudflare-5.png)
 10. Finally, change the mode to Full (Strict)
-    ![Image](images/advanced/cloudflare-5.png)
+    ![Image](images/advanced/cloudflare-4.png)
 
 That's it! Your site may be unavailable for a few moments while the security changes take effect, this is normal.
 
