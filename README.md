@@ -147,3 +147,40 @@ All right, our service is running but isn't accessible at all to users, which me
        ![Image](images/networking/lb-listener.png)
     6. Click create load balancer.
 12. On the next screen, wait until your load balancer is provisioned, then copy / paste the DNS name into a browser. Your website should appear (Note: You may have to wait until 2 hours).
+
+### DNS
+
+The website works! And other folks can access it, but that domain name isn't very nice. Let's get a nicer domain name and set it up.
+
+> Note: I assume at this point you have created [Namecheap](https://namecheap.com) and [Cloudflare](https://cloudflare.com) accounts. I also assume you have acquired a domain name either through Namecheap's Github Education Pack deal, or by purchasing one yourself. The domain I will use as an example is `https://ethantmcgee.me`
+
+1. Login to your Namecheap Dashboard, then go to Domains and click Manage beside the domain we are setting up.
+   ![Image](images/dns/namecheap-1.png)
+2. In another tab, login to your Cloudflare dashboard, then click Add Site.
+   1. Type in your Domain then click Continue.
+      ![Image](images/dns/cloudflare-1.png)
+   2. Scroll down and click Free then Continue.
+      ![Image](images/dns/cloudflare-2.png)
+   3. On the next screen, if there are any records present, delete them.
+   4. Click Continue, ignoring the warning.
+      ![Image](images/dns/cloudflare-3.png)
+   5. This page will give you two nameservers (i.e. `ben.ns.cloudflare.com` and `mia.ns.cloudflare.com`). Copy them.
+      ![Image](images/dns/cloudflare-4.png)
+3. Back on Namecheap. Find the Nameservers section, change to Custom DNS, and paste in the two nameservers Cloudflare provided, then click the green check.
+   ![Image](images/dns/namecheap-2.png)
+4. Close the Namecheap tab.
+5. Back on Cloudflare.
+   1. Click Continue.
+      ![Image](images/dns/cloudflare-5.png)
+   2. On the next screen, enable automatic HTTPS Rewrites, enable Always Use HTTPS, disable brotli (if you are not offered this option, ignore as this is a setting Cloudflare plans to soon deprecate.)
+   3. Click Finish.
+   4. Click the DNS button in the corner.
+      ![Image](images/dns/cloudflare-6.png)
+   5. Click Add Record.
+   6. For the type use CNAME, for the Name use `@` and for the value, use AWS's Domain Name for the load balancer.
+      ![Image](images/dns/cloudflare-7.png)
+   7. Click Save.
+   8. Repeat this process, but change the name to `www`.
+      ![Image](images/dns/cloudflare-8.png)
+   9. Click Save.
+   10. Wait 1-2 hours, then visit your domain (i.e. `https://ethantmcgee.me`) in a browser. It should work.
