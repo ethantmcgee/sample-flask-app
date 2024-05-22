@@ -51,11 +51,11 @@ We’ll start at the bottom with the server, then work our way up to the domain.
    7. Click Launch Instance to the right.
 4. Click on the link to return to the instances screen and wait a few moments while your server boots.
 5. Once your server has an ip address, attempt to connect to it with: `ssh -i "<Login Key>.pem" ubuntu@<ip address>` (ex: `ssh -i "Web Server.pem" ubuntu@3.88.107.55`). Note: you may receive a warning on your first server connection, asking if you trust the key, type `yes` then hit enter. If you receive a permissions warning strengthen the permissions with `chmod 0600 "<Login Key>.pem"`.
-   ![Image](images/setup/connect.png)
+   ![Image](images/server/connect.png)
 6. Once logged into the server, run security updates: `sudo apt-get update && sudo apt-get upgrade -y`
-   ![Image](images/setup/update.png)
+   ![Image](images/server/update.png)
 7. Now install python: `sudo apt-get install -y python3-pip`
-   ![Image](images/setup/install.png)
+   ![Image](images/server/install.png)
 8. Type `exit` to leave the server and return to your machine.
 
 ### Application Setup
@@ -64,20 +64,20 @@ Congratulations! You have a server running in the cloud, but it has nothing on i
 
 1. Login to your server again: `ssh -i "<Login Key>.pem" ubuntu@<ip address>`.
 2. Create a directory to house your web application `mkdir flask-app`.
-   ![Image](images/setup/mkdir.png)
+   ![Image](images/server/mkdir.png)
 3. Exit the server.
 4. Download this repository, extract the zip, then `cd` into the extracted folder.
 5. Let's copy the `flask_app.py` file to the folder you just made on the server. `scp -i "<Login Key>.pem" flask_app.py ubuntu@<ip address>:~/flask-app/`
-   ![Image](images/setup/copy1.png)
+   ![Image](images/server/copy1.png)
 6. Do the same with the `requirements.txt`: `scp -i "<Login Key>.pem" requirements.txt ubuntu@<ip address>:~/flask-app/`
-   ![Image](images/setup/copy2.png)
+   ![Image](images/server/copy2.png)
 
 > Note: As you move forward with your project, any changes you make to either file on your local machine will need to be copied to the server with the same commands. Ditto goes for any new files.
 
 7. Finally, copy the `flask-app.service` files: `scp -i "<Login Key>.pem" flask-app.service ubuntu@<ip address>:~/`
-   ![Image](images/setup/copy3.png)
+   ![Image](images/server/copy3.png)
 8. Log back into the server, then `cd flask-app`. Run `ls` to see that the `flask_app.py` and `requirements.txt` were copied successfully. If you don't see the files, stop here and reattempt the above or seek help until they are present.
-   ![Image](images/setup/ls1.png)
+   ![Image](images/server/ls1.png)
 9. Let's setup flask and try the server.
 
 ```
@@ -85,12 +85,12 @@ sudo pip3 install --break-system-packages -r requirements.txt
 python3 flask_app.py
 ```
 
-![Image](images/setup/app-run.png)
+![Image](images/server/app-run.png)
 
 You should see a message that the app is running.
 
 10. Stop the app with `<crtl> + c` then `cd ..`. Run `ls` to see the service file you copied earlier. If you don't see the file, stop here and reattempt the above or seek help until it is present.
-    ![Image](images/setup/ls2.png)
+    ![Image](images/server/ls2.png)
 11. Let's install the service.
 
 ```
@@ -100,10 +100,10 @@ sudo systemctl enable flask-app
 sudo service flask-app start
 ```
 
-![Image](images/setup/service-setup.png)
+![Image](images/server/service-setup.png)
 
 12. Now if you run `sudo service flask-app status` you should be able to see the service running.
-    ![Image](images/setup/service-status.png)
+    ![Image](images/server/service-status.png)
 13. NIf you need to change the service you can stop it with `sudo service flask-app stop` or restart it with `sudo service flask-app restart`.
 
 ### Network
