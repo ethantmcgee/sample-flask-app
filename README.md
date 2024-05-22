@@ -37,22 +37,25 @@ We’ll start at the bottom with the server, then work our way up to the domain.
 2. Once you have logged into the Console, use the search bar at the top to search for EC2, then click the service.
 3. Under Resources, you'll see a yellow button labeled `Launch Instance`. Go ahead and click it.
    1. Under Names and Tags, give your server a good name like `Web Server`.
-      ![Name and tags](images/ec2/name-tags.png)
+      ![Image](images/ec2/name-tags.png)
    2. Under Application and OS Images, change the image type to `Ubuntu` then pick the most recent LTS from the AMI dropdown.
-      ![Name and tags](images/ec2/ami.png)
+      ![Image](images/ec2/ami.png)
    3. Under Instance Type, leave `t2.micro` selected.
-      ![Name and tags](images/ec2/instance-type.png)
+      ![Image](images/ec2/instance-type.png)
    4. Under Key Pair, click `Create new key pair`. Enter a name like `Web Server`, but leave all other settings as their default. Ensure the downloaded file when you click create is stored somewhere safe. If you lose this, you lose access to your server.
-      ![Name and tags](images/ec2/create-key-pair.png)
+      ![Image](images/ec2/create-key-pair.png)
    5. Under Network Settings, use the default settings.
-      ![Name and tags](images/ec2/network.png)
+      ![Image](images/ec2/network.png)
    6. Under Configure Storage, use the default settings.
-      ![Name and tags](images/ec2/storage.png)
+      ![Image](images/ec2/storage.png)
    7. Click Launch Instance to the right.
 4. Click on the link to return to the instances screen and wait a few moments while your server boots.
-5. Once your server has an ip address, attempt to connect to it with: `ssh -i "<Login Key>.pem" ubuntu@<ip address>` (ex: `ssh -i "Web Server.pem" ubuntu@54.87.51.78`). Note: you may receive a warning on your first server connection, asking if you trust the key, type `yes` then hit enter. If you receive a permissions warning strengthen the permissions with `chmod 0600 "<Login Key>.pem"`.
+5. Once your server has an ip address, attempt to connect to it with: `ssh -i "<Login Key>.pem" ubuntu@<ip address>` (ex: `ssh -i "Web Server.pem" ubuntu@3.88.107.55`). Note: you may receive a warning on your first server connection, asking if you trust the key, type `yes` then hit enter. If you receive a permissions warning strengthen the permissions with `chmod 0600 "<Login Key>.pem"`.
+   ![Image](images/setup/connect.png)
 6. Once logged into the server, run security updates: `sudo apt-get update && sudo apt-get upgrade -y`
+   ![Image](images/setup/update.png)
 7. Now install python: `sudo apt-get install -y python3-pip`
+   ![Image](images/setup/install.png)
 8. Type `exit` to leave the server and return to your machine.
 
 ### Application Setup
@@ -61,15 +64,20 @@ Congratulations! You have a server running in the cloud, but it has nothing on i
 
 1. Login to your server again: `ssh -i "<Login Key>.pem" ubuntu@<ip address>`.
 2. Create a directory to house your web application `mkdir flask-app`.
+   ![Image](images/setup/mkdir.png)
 3. Exit the server.
 4. Download this repository, extract the zip, then `cd` into the extracted folder.
 5. Let's copy the `flask_app.py` file to the folder you just made on the server. `scp -i "<Login Key>.pem" flask_app.py ubuntu@<ip address>:~/flask-app/`
+   ![Image](images/setup/copy1.png)
 6. Do the same with the `requirements.txt`: `scp -i "<Login Key>.pem" requirements.txt ubuntu@<ip address>:~/flask-app/`
+   ![Image](images/setup/copy2.png)
 
 > Note: As you move forward with your project, any changes you make to either file on your local machine will need to be copied to the server with the same commands. Ditto goes for any new files.
 
 7. Finally, copy the `flask-app.service` files: `scp -i "<Login Key>.pem" flask-app.service ubuntu@<ip address>:~/`
+   ![Image](images/setup/copy3.png)
 8. Log back into the server, then `cd flask-app`. Run `ls` to see that the `flask_app.py` and `requirements.txt` were copied successfully. If you don't see the files, stop here and reattempt the above or seek help until they are present.
+   ![Image](images/setup/ls1.png)
 9. Let's setup flask and try the server.
 
 ```
@@ -77,9 +85,12 @@ sudo pip3 install --break-system-packages -r requirements.txt
 python3 flask_app.py
 ```
 
+![Image](images/setup/app-run.png)
+
 You should see a message that the app is running.
 
 10. Stop the app with `<crtl> + c` then `cd ..`. Run `ls` to see the service file you copied earlier. If you don't see the file, stop here and reattempt the above or seek help until it is present.
+    ![Image](images/setup/ls2.png)
 11. Let's install the service.
 
 ```
@@ -89,7 +100,10 @@ sudo systemctl enable flask-app
 sudo service flask-app start
 ```
 
+![Image](images/setup/service-setup.png)
+
 12. Now if you run `sudo service flask-app status` you should be able to see the service running.
+    ![Image](images/setup/service-status.png)
 13. NIf you need to change the service you can stop it with `sudo service flask-app stop` or restart it with `sudo service flask-app restart`.
 
 ### Network
@@ -99,6 +113,12 @@ All right, our service is running but isn't accessible at all to users, which me
 1. In the AWS Console, using the search bar, search for `Security Groups`.
 1. There should be two security groups, a `default` and a `launch wizard`. We are not going to touch the `default` group.
 1. Name the `launch wizard` group to `Web Server SG`.
-
+   ![Image](images/networking/sg-1.png)
 1. Make another security group named `load-balancer-sg`.
 1. Under Inbound Rules, add two rules.
+   ![Image](images/networking/rules.png)
+1. Copy the security group id of your new group.
+   ![Image](images/networking/sg-2.png)
+1. Edit the inbound rules of your `launch wizard` group. Add a new rule.
+   ![Image](images/networking/new-rule.png)
+1.
