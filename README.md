@@ -140,7 +140,7 @@ All right, our service is running but isn't accessible at all to users, which me
     2. Name the load balancer `web-server-lb`.
        ![Image](images/networking/lb-name.png)
     3. Check all the boxes under Network Mapping.
-       ![Image](images/networking/lb-mapping.png)
+       ![Image](images/networking/lb-network-mapping.png)
     4. Under security groups, remove default, and select your `load-balancer-sg` group.
        ![Image](images/networking/lb-sg.png)
     5. Under Listenders and Routing, change the target group to `web-server-tg`.
