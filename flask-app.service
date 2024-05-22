@@ -1,0 +1,13 @@
+[Unit]
+Description=Sample Flask Web Application
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/flask-app
+Environment=FLASK_CONFIG=production
+ExecStart=python3 flask_app.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
