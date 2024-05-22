@@ -2,7 +2,14 @@
 
 ## Overview
 
-In this guide, you’ll work through the process of 1) purchasing a domain name, 2) configuring that domain name to point to a server, 3) setting up a server, and 4) configuring HTTPS. This process will take some time, make sure to budget at least 1 hour.
+In this guide, you’ll work through the process of
+
+1. purchasing a domain name,
+2. configuring that domain name to point to a server,
+3. setting up a server, and
+4. configuring HTTPS.
+
+This process will take some time, make sure to budget at least 1 hour.
 
 ## Background Terms
 
